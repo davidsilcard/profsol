@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}Home | Prof. Sol Tricô & Crochê{% endblock %}
+
+{% block content %}
+<section class="hero-grid">
+    <div class="hero-copy card">
+        <span class="section-tag">Apresentação</span>
+        <h1>
+            {% if site_content %}
+                {{ site_content.hero_title }}
+            {% else %}
+                Tricô e crochê em uma vitrine acolhedora para aulas, inspirações e receitas digitais.
+            {% endif %}
+        </h1>
+        <p class="lead">
+            {% if site_content %}
+                {{ site_content.hero_subtitle }}
+            {% else %}
+                Espaço reservado para a história da professora, sua metodologia e a identidade visual da marca.
+            {% endif %}
+        </p>
+        <div class="hero-actions">
+            <a class="primary-button" href="{% url 'atelier:recipe_list' %}">Ver receitas</a>
+            <a class="secondary-button" href="{% url 'atelier:video_list' %}">Explorar vídeos</a>
+        </div>
+        <div class="hero-note">
+            {% if site_content %}
+                {{ site_content.highlight_text }}
+            {% else %}
+                Aqui você poderá destacar a proposta pedagógica, os tipos de peças e o carinho do ateliê.
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="hero-portrait card">
+        {% if site_content and site_content.hero_image %}
+            <img src="{{ site_content.hero_image.url }}" alt="Foto da professora">
+        {% else %}
+            <div class="placeholder-portrait">
+                <span>Espaço para foto da professora</span>
+            </div>
+        {% endif %}
+        <div class="portrait-caption">
+            <strong>{% if site_content %}{{ site_content.teacher_name }}{% else %}Professora Sol{% endif %}</strong>
+            <span>Tricô, crochê e receitas autorais</span>
+        </div>
+    </div>
+</section>
+
+<section class="content-panel two-column">
+    <article class="card soft-card">
+        <span class="section-tag">Sobre o ateliê</span>
+        <h2>{% if site_content %}{{ site_content.about_title }}{% else %}Uma marca com identidade própria{% endif %}</h2>
+        <p>{% if site_content %}{{ site_content.about_text }}{% else %}Este bloco foi deixado para inserir biografia, diferenciais, formação da professora e proposta das aulas e receitas.{% endif %}</p>
+    </article>
+    <article class="card soft-card">
+        <span class="section-tag">Contato</span>
+        <h2>Campos reservados para marca e relacionamento</h2>
+        <ul class="detail-list">
+            <li>Nome da marca e logo</li>
+            <li>Foto institucional e mini bio</li>
+            <li>E-mail de contato e WhatsApp</li>
+            <li>Instagram e outros canais</li>
+        </ul>
+    </article>
+</section>
+
+<section class="section-block">
+    <div class="section-head">
+        <div>
+            <span class="section-tag">Vídeos recentes</span>
+            <h2>Resumo da aba Vídeos</h2>
+        </div>
+        <a href="{% url 'atelier:video_list' %}">Ver todos</a>
+    </div>
+    <div class="card-grid">
+        {% for video in featured_videos %}
+            <article class="card media-card">
+                <div class="media-thumb">
+                    {% if video.thumbnail_url %}
+                        <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}">
+                    {% else %}
+                        <div class="placeholder-box">Thumbnail do YouTube</div>
+                    {% endif %}
+                </div>
+                <div class="media-content">
+                    <span class="mini-tag">{{ video.theme_label }}</span>
+                    <h3>{{ video.title }}</h3>
+                    <p>{{ video.description|default:"Vídeo importado do canal da professora."|truncatechars:130 }}</p>
+                    <a class="inline-link" href="{{ video.youtube_url }}" target="_blank" rel="noopener">Abrir no YouTube</a>
+                </div>
+            </article>
+        {% empty %}
+            <article class="card empty-card">
+                <h3>Nenhum vídeo importado ainda</h3>
+                <p>Quando a sincronização do canal for executada, os vídeos mais recentes aparecerão aqui.</p>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section-block">
+    <div class="section-head">
+        <div>
+            <span class="section-tag">Receitas em destaque</span>
+            <h2>Resumo da aba Receitas</h2>
+        </div>
+        <a href="{% url 'atelier:recipe_list' %}">Ver catálogo</a>
+    </div>
+    <div class="card-grid recipe-grid">
+        {% for recipe in featured_recipes %}
+            <article class="card product-card">
+                <div class="product-cover">
+                    {% if recipe.cover_image %}
+                        <img src="{{ recipe.cover_image.url }}" alt="{{ recipe.title }}">
+                    {% else %}
+                        <div class="placeholder-box">Capa da receita</div>
+                    {% endif %}
+                </div>
+                <div class="media-content">
+                    <h3>{{ recipe.title }}</h3>
+                    <p>{{ recipe.short_description }}</p>
+                    <div class="price-row">
+                        <strong>R$ {{ recipe.price }}</strong>
+                        <a class="primary-button" href="{{ recipe.get_absolute_url }}">Comprar</a>
+                    </div>
+                </div>
+            </article>
+        {% empty %}
+            <article class="card empty-card">
+                <h3>Catálogo em preparação</h3>
+                <p>Cadastre as primeiras receitas no admin para destacar os PDFs na home.</p>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

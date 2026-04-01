@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Receitas | Prof. Sol Tricô & Crochê{% endblock %}
+
+{% block content %}
+<section class="page-hero card">
+    <span class="section-tag">Catálogo digital</span>
+    <h1>Receitas em PDF para vender com login e pagamento</h1>
+    <p>Cada receita pode ter capa, descrição detalhada, preço, PDF protegido e liberação automática após pagamento aprovado.</p>
+</section>
+
+<section class="card-grid recipe-grid">
+    {% for recipe in recipes %}
+        <article class="card product-card">
+            <div class="product-cover">
+                {% if recipe.cover_image %}
+                    <img src="{{ recipe.cover_image.url }}" alt="{{ recipe.title }}">
+                {% else %}
+                    <div class="placeholder-box">Capa da receita</div>
+                {% endif %}
+            </div>
+            <div class="media-content">
+                <h2>{{ recipe.title }}</h2>
+                <p>{{ recipe.short_description }}</p>
+                <div class="price-row">
+                    <strong>R$ {{ recipe.price }}</strong>
+                    <a class="primary-button" href="{{ recipe.get_absolute_url }}">Ver detalhes</a>
+                </div>
+            </div>
+        </article>
+    {% empty %}
+        <article class="card empty-card">
+            <h2>Nenhuma receita cadastrada</h2>
+            <p>Cadastre as receitas no admin para iniciar a vitrine digital.</p>
+        </article>
+    {% endfor %}
+</section>
+{% endblock %}

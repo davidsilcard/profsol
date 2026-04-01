@@ -1,0 +1,12 @@
+[project]
+name = "pagina-sol"
+version = "0.1.0"
+description = "Site em Django para a professora Sol, com vídeos, receitas digitais e checkout."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "Django>=5.2,<5.3",
+    "gunicorn>=23.0.0,<24.0.0",
+    "Pillow>=11.0.0,<12.0.0",
+    "requests>=2.32.0,<3.0.0",
+]

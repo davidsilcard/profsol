@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Entrar | Prof. Sol Tricô & Crochê{% endblock %}
+
+{% block content %}
+<section class="auth-shell">
+    <article class="card auth-card">
+        <span class="section-tag">Acesso</span>
+        <h1>Entrar na conta</h1>
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="primary-button">Entrar</button>
+        </form>
+        <p class="small-note">Ainda não tem conta? <a href="{% url 'atelier:signup' %}">Criar cadastro</a></p>
+    </article>
+</section>
+{% endblock %}

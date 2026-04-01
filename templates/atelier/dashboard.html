@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Minha conta | Prof. Sol Tricô & Crochê{% endblock %}
+
+{% block content %}
+<section class="page-hero card">
+    <span class="section-tag">Área da cliente</span>
+    <h1>Minha conta</h1>
+    <p>Aqui ficam as receitas liberadas para download e o histórico dos pagamentos.</p>
+</section>
+
+<section class="content-panel two-column">
+    <article class="card soft-card">
+        <h2>Receitas liberadas</h2>
+        <div class="stack-list">
+            {% for order in paid_orders %}
+                <div class="stack-row">
+                    <div>
+                        <strong>{{ order.recipe.title }}</strong>
+                        <span>Aprovado em {{ order.paid_at|date:"d/m/Y H:i" }}</span>
+                    </div>
+                    <a class="inline-link" href="{% url 'atelier:recipe_download' order.recipe.slug %}">Baixar PDF</a>
+                </div>
+            {% empty %}
+                <p>Nenhuma receita liberada ainda.</p>
+            {% endfor %}
+        </div>
+    </article>
+    <article class="card soft-card">
+        <h2>Pedidos em andamento</h2>
+        <div class="stack-list">
+            {% for order in pending_orders %}
+                <div class="stack-row">
+                    <div>
+                        <strong>{{ order.recipe.title }}</strong>
+                        <span>Status: {{ order.get_status_display }}</span>
+                    </div>
+                    {% if order.checkout_url %}
+                        <a class="inline-link" href="{{ order.checkout_url }}" target="_blank" rel="noopener">Retomar pagamento</a>
+                    {% endif %}
+                </div>
+            {% empty %}
+                <p>Nenhum pedido pendente.</p>
+            {% endfor %}
+        </div>
+    </article>
+</section>
+{% endblock %}

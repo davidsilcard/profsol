@@ -1,0 +1,19 @@
+[Unit]
+Description=ProfSol Django application
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/srv/profsol/current
+EnvironmentFile=/etc/profsol/profsol.env
+ExecStart=/srv/profsol/current/.venv/bin/gunicorn --workers 3 --bind unix:/run/profsol/profsol.sock config.wsgi:application
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=always
+RestartSec=5
+RuntimeDirectory=profsol
+RuntimeDirectoryMode=0755
+
+[Install]
+WantedBy=multi-user.target

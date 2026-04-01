@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Criar conta | Prof. Sol Tricô & Crochê{% endblock %}
+
+{% block content %}
+<section class="auth-shell">
+    <article class="card auth-card">
+        <span class="section-tag">Cadastro</span>
+        <h1>Criar conta</h1>
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="primary-button">Criar conta</button>
+        </form>
+        <p class="small-note">Já possui conta? <a href="{% url 'login' %}">Entrar</a></p>
+    </article>
+</section>
+{% endblock %}

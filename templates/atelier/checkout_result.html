@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout | Prof. Sol Tricô & Crochê{% endblock %}
+
+{% block content %}
+<section class="page-hero card">
+    {% if status == "success" %}
+        <span class="section-tag">Pagamento enviado</span>
+        <h1>Compra recebida</h1>
+        <p>Se o pagamento já tiver sido aprovado, a receita será liberada na sua conta e enviada por e-mail. Em alguns casos o gateway ainda pode demorar alguns instantes para confirmar.</p>
+    {% elif status == "pending" %}
+        <span class="section-tag">Aguardando confirmação</span>
+        <h1>Seu pedido está pendente</h1>
+        <p>Assim que o pagamento for confirmado, a receita ficará disponível para download e o PDF será enviado por e-mail.</p>
+    {% else %}
+        <span class="section-tag">Pagamento não concluído</span>
+        <h1>Não foi possível finalizar a compra</h1>
+        <p>Você pode tentar novamente pelo catálogo de receitas.</p>
+    {% endif %}
+    <div class="hero-actions">
+        <a class="primary-button" href="{% url 'atelier:dashboard' %}">Ir para minha conta</a>
+        <a class="secondary-button" href="{% url 'atelier:recipe_list' %}">Voltar ao catálogo</a>
+    </div>
+</section>
+{% endblock %}

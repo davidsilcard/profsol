@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}{{ recipe.title }} | Prof. Sol Tricô & Crochê{% endblock %}
+
+{% block content %}
+<section class="detail-layout">
+    <article class="card detail-cover">
+        {% if recipe.cover_image %}
+            <img src="{{ recipe.cover_image.url }}" alt="{{ recipe.title }}">
+        {% else %}
+            <div class="placeholder-box large-placeholder">Capa da receita</div>
+        {% endif %}
+    </article>
+
+    <article class="card detail-copy">
+        <span class="section-tag">Receita digital</span>
+        <h1>{{ recipe.title }}</h1>
+        <p class="lead">{{ recipe.short_description }}</p>
+        <div class="price-badge">R$ {{ recipe.price }}</div>
+        <div class="rich-copy">
+            {{ recipe.description|linebreaks }}
+        </div>
+        <div class="purchase-box">
+            {% if user_order %}
+                <p>Esta receita já está liberada para a sua conta.</p>
+                <a class="primary-button" href="{% url 'atelier:recipe_download' recipe.slug %}">Baixar PDF</a>
+            {% else %}
+                <p>O pagamento é feito com Mercado Pago, com opção de Pix e cartão, e o PDF fica disponível para download e envio por e-mail.</p>
+                <form method="post" action="{% url 'atelier:recipe_checkout_start' recipe.slug %}">
+                    {% csrf_token %}
+                    <button type="submit" class="primary-button">Comprar agora</button>
+                </form>
+                {% if not request.user.is_authenticated %}
+                    <p class="small-note">Você precisará fazer login para concluir a compra.</p>
+                {% endif %}
+            {% endif %}
+        </div>
+    </article>
+</section>
+{% endblock %}

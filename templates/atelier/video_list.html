@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Vídeos | Prof. Sol Tricô & Crochê{% endblock %}
+
+{% block content %}
+<section class="page-hero card">
+    <span class="section-tag">Canal oficial</span>
+    <h1>Vídeos organizados por tema</h1>
+    <p>Os vídeos podem ser separados em temas no painel administrativo. Ao clicar, a pessoa segue para o vídeo original no YouTube.</p>
+    <a class="secondary-button" href="{{ channel_url }}" target="_blank" rel="noopener">Abrir canal no YouTube</a>
+</section>
+
+{% for section in video_sections %}
+    <section class="section-block">
+        <div class="section-head">
+            <div>
+                <span class="section-tag">Tema</span>
+                <h2>{{ section.title }}</h2>
+            </div>
+            {% if section.description %}
+                <p class="section-description">{{ section.description }}</p>
+            {% endif %}
+        </div>
+        <div class="card-grid">
+            {% for video in section.videos %}
+                <article class="card media-card">
+                    <div class="media-thumb">
+                        {% if video.thumbnail_url %}
+                            <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}">
+                        {% else %}
+                            <div class="placeholder-box">Thumbnail do vídeo</div>
+                        {% endif %}
+                    </div>
+                    <div class="media-content">
+                        <span class="mini-tag">{{ video.theme_label }}</span>
+                        <h3>{{ video.title }}</h3>
+                        <p>{{ video.description|truncatechars:150 }}</p>
+                        <a class="inline-link" href="{{ video.youtube_url }}" target="_blank" rel="noopener">Assistir no YouTube</a>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    </section>
+{% empty %}
+    <section class="section-block">
+        <article class="card empty-card">
+            <h2>Nenhum vídeo disponível</h2>
+            <p>Execute a sincronização do canal ou cadastre vídeos manualmente no admin.</p>
+        </article>
+    </section>
+{% endfor %}
+{% endblock %}
