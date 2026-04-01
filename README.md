@@ -15,7 +15,8 @@ Projeto Django para um site com:
 - Python 3.12
 - Django 5.2
 - Gunicorn
-- SQLite no ambiente inicial
+- SQLite no desenvolvimento local
+- PostgreSQL recomendado em produção
 - Requests para integrações externas
 
 ## Como rodar
@@ -55,6 +56,7 @@ uv run python manage.py runserver
 - produção: `config.settings.production`
 
 Para publicar na VPS, use `DJANGO_SETTINGS_MODULE=config.settings.production`.
+Em produção, configure também `DB_ENGINE=postgres` e as variáveis `POSTGRES_*`.
 
 ## Fluxo de conteúdo
 
