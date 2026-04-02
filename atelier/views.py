@@ -24,6 +24,7 @@ from atelier.services.payments import (
     mercado_pago_is_configured,
     update_order_from_payment_data,
 )
+from atelier.services.qrcode import build_qr_code_data_uri
 from atelier.services.youtube import sync_on_demand_if_needed
 
 
@@ -36,6 +37,7 @@ class HomeView(TemplateView):
         context["site_content"] = SiteContent.current()
         context["featured_videos"] = Video.objects.filter(is_published=True).order_by("-is_featured", "-published_at")[:6]
         context["featured_recipes"] = Recipe.objects.filter(is_active=True).order_by("-is_featured", "-created_at")[:3]
+        context["site_qr_code"] = build_qr_code_data_uri(settings.SITE_URL)
         return context
 
 

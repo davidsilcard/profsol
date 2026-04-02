@@ -9,5 +9,6 @@ dependencies = [
     "gunicorn>=23.0.0,<24.0.0",
     "Pillow>=11.0.0,<12.0.0",
     "psycopg[binary]>=3.2.0,<3.3.0",
+    "qrcode>=8.2,<9.0",
     "requests>=2.32.0,<3.0.0",
 ]

@@ -9,6 +9,7 @@ class PublicPagesTests(TestCase):
     def test_home_page_loads(self):
         response = self.client.get(reverse("atelier:home"))
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "QR code para abrir o site da professora Sol")
 
     def test_recipe_list_loads(self):
         Recipe.objects.create(
