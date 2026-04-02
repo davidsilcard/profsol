@@ -35,8 +35,8 @@ class HomeView(TemplateView):
         sync_on_demand_if_needed()
         context = super().get_context_data(**kwargs)
         context["site_content"] = SiteContent.current()
-        context["featured_videos"] = Video.objects.filter(is_published=True).order_by("-is_featured", "-published_at")[:6]
-        context["featured_recipes"] = Recipe.objects.filter(is_active=True).order_by("-is_featured", "-created_at")[:3]
+        context["featured_videos"] = Video.objects.filter(is_published=True).order_by("-published_at", "-created_at")[:6]
+        context["featured_recipes"] = Recipe.objects.filter(is_active=True).order_by("-created_at")[:6]
         context["site_qr_code"] = build_qr_code_data_uri(settings.SITE_URL)
         return context
 

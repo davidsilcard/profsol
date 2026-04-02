@@ -11,6 +11,21 @@ class PublicPagesTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "QR code para abrir o site da professora Sol")
 
+    def test_home_shows_six_most_recent_recipes(self):
+        for index in range(7):
+            Recipe.objects.create(
+                title=f"Receita {index}",
+                short_description="Descricao curta",
+                description="Descricao longa",
+                price="19.90",
+            )
+
+        response = self.client.get(reverse("atelier:home"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Receita 6")
+        self.assertContains(response, "Receita 1")
+        self.assertNotContains(response, "Receita 0")
+
     def test_recipe_list_loads(self):
         Recipe.objects.create(
             title="Cachecol Ponto Folha",
